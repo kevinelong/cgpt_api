@@ -14,13 +14,13 @@ curl https://api.openai.com/v1/completions \
 }'
 */
 
-async function go() {
+async function ask(key, question, callback) {
     const openapikey = "";
     const response = await fetch("https://api.openai.com/v1/completions",{
         method: "POST",
         headers:{
             "Content-Type" :"application/json",
-            "Authorization" :`Bearer ${openapikey}`
+            "Authorization" :`Bearer ${key}`
         },
         body: JSON.stringify({
             "model": "text-davinci-003",
@@ -36,7 +36,7 @@ async function go() {
             Q: Who was president of the United States in 1955?\nA: Dwight D. Eisenhower was president of the United States in 1955.\n\nQ: Which party did he belong to?\nA: He belonged to the Republican Party.\n\nQ: What is the square root of banana?\nA: Unknown\n\nQ: How does a telescope work?\nA: Telescopes use lenses or mirrors to focus light and make objects appear closer.\n\nQ: Where were the 1992 Olympics held?\nA: The 1992 Olympics were held in Barcelona, Spain.\n\nQ: How many squigs are in a bonk?
             A: Unknown
             
-            Q: How many films was rita hayworth in?
+            Q: ${question}
             A:`,
             "temperature": 0,
             "max_tokens": 100,
@@ -48,9 +48,7 @@ async function go() {
     })
     .then((response) => response.json())
     .then((data) => {
-        data.choices.forEach(choice=>{
-            console.log(choice.text)
-        })
+        callback(data.choices)
     });
 }
 

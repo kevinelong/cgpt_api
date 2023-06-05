@@ -1,0 +1,19 @@
+
+<body>
+    <input id="key" placeholder="paste openai key here">
+    <input id="input" placeholder="question">
+    <button id="go">Ask</button>
+    <div id="results"></div>
+</body>
+<script src="scratch.js"></script>
+
+<script>
+    go.addEventListener("click",()=>{
+        ask(key.value, input.value , choices=>{
+            results.innerHTML = '';
+            choices.forEach(choice=>{
+                results.innerHTML += choice.text + '<br>';
+            });//end for each
+        });//end handle choices
+    });//end click
+</script>
